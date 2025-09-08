@@ -1,0 +1,206 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  phone     String?
+  role      UserRole @default(USER)
+  password  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  complaints Complaint[]
+  recoveries Recovery[]
+  chatSessions ChatSession[]
+  notes      Note[]
+
+  @@map("users")
+}
+
+model Complaint {
+  id          String          @id @default(cuid())
+  trackingId  String          @unique @default(cuid())
+  userId      String?
+  name        String
+  email       String
+  phone       String?
+  category    ComplaintType
+  priority    Priority        @default(MEDIUM)
+  subject     String
+  description String
+  evidence    String?
+  status      ComplaintStatus @default(PENDING)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  user  User?  @relation(fields: [userId], references: [id])
+  notes Note[]
+
+  @@map("complaints")
+}
+
+model Recovery {
+  id           String        @id @default(cuid())
+  trackingId   String        @unique @default(cuid())
+  userId       String?
+  name         String
+  email        String
+  phone        String?
+  recoveryType RecoveryType
+  assetType    AssetType
+  description  String
+  lossAmount   String?
+  lossDate     DateTime?
+  evidence     String?
+  status       RecoveryStatus @default(PENDING)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  user  User?  @relation(fields: [userId], references: [id])
+  notes Note[]
+
+  @@map("recoveries")
+}
+
+model ChatSession {
+  id        String   @id @default(cuid())
+  userId    String?
+  sessionId String   @unique
+  name      String?
+  email     String?
+  status    ChatStatus @default(ACTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User?        @relation(fields: [userId], references: [id])
+  messages ChatMessage[]
+
+  @@map("chat_sessions")
+}
+
+model ChatMessage {
+  id            String      @id @default(cuid())
+  sessionId     String
+  sender        MessageSender
+  message       String
+  timestamp     DateTime    @default(now())
+
+  session ChatSession @relation(fields: [sessionId], references: [sessionId])
+
+  @@map("chat_messages")
+}
+
+model Note {
+  id          String    @id @default(cuid())
+  content     String
+  authorId    String
+  complaintId String?
+  recoveryId  String?
+  createdAt   DateTime  @default(now())
+
+  author    User       @relation(fields: [authorId], references: [id])
+  complaint Complaint? @relation(fields: [complaintId], references: [id])
+  recovery  Recovery?  @relation(fields: [recoveryId], references: [id])
+
+  @@map("notes")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum ComplaintType {
+  ACCOUNT_HACK
+  IDENTITY_THEFT
+  FINANCIAL_FRAUD
+  CYBERBULLYING
+  PHISHING
+  MALWARE
+  DATA_BREACH
+  RANSOMWARE
+  SOCIAL_ENGINEERING
+  ONLINE_SCAM
+  CRYPTOCURRENCY_THEFT
+  EMAIL_COMPROMISE
+  WEBSITE_DEFACEMENT
+  OTHER
+}
+
+enum RecoveryType {
+  ACCOUNT_RECOVERY
+  CRYPTOCURRENCY_RECOVERY
+  DATA_RECOVERY
+  EMAIL_RECOVERY
+  SOCIAL_MEDIA_RECOVERY
+  FINANCIAL_RECOVERY
+  IDENTITY_RECOVERY
+  DEVICE_RECOVERY
+}
+
+enum AssetType {
+  CRYPTOCURRENCY
+  BANK_ACCOUNT
+  EMAIL_ACCOUNT
+  SOCIAL_MEDIA
+  GAMING_ACCOUNT
+  CLOUD_STORAGE
+  DOMAIN_NAME
+  WEBSITE
+  MOBILE_WALLET
+  TRADING_ACCOUNT
+  PAYPAL_ACCOUNT
+  DIGITAL_WALLET
+  OTHER
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+  EMERGENCY
+}
+
+enum ComplaintStatus {
+  PENDING
+  IN_PROGRESS
+  INVESTIGATING
+  RESOLVED
+  CLOSED
+  ESCALATED
+}
+
+enum RecoveryStatus {
+  PENDING
+  IN_PROGRESS
+  ANALYZING
+  RECOVERING
+  COMPLETED
+  FAILED
+  PARTIAL_RECOVERY
+}
+
+enum ChatStatus {
+  ACTIVE
+  CLOSED
+  TRANSFERRED
+}
+
+enum MessageSender {
+  USER
+  AGENT
+  BOT
+}

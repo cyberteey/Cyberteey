@@ -1,8 +1,83 @@
 import Link from "next/link"
 import Image from "next/image"
-import { Shield, Code, Lock, Database, CheckCircle, Cloud, TabletIcon as DeviceTablet } from "lucide-react"
-
+import type { Metadata } from "next"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import {
+  Shield,
+  Code,
+  Lock,
+  Database,
+  CheckCircle,
+  Cloud,
+  LucideTablet as DeviceTablet,
+  Search,
+  Users,
+  Award,
+  Clock,
+} from "lucide-react"
+
+export const metadata: Metadata = {
+  title: "Services - Cyberteey Crime Lab",
+  description:
+    "Comprehensive cybersecurity services including digital forensics, asset recovery, and incident response.",
+}
+
+const services = [
+  {
+    icon: Shield,
+    title: "Digital Forensics",
+    description: "Advanced investigation techniques to uncover digital evidence and analyze cyber incidents.",
+    features: [
+      "Computer and mobile device analysis",
+      "Network traffic investigation",
+      "Malware analysis and reverse engineering",
+      "Data recovery from damaged devices",
+      "Expert witness testimony",
+    ],
+    pricing: "Starting at $500/hour",
+  },
+  {
+    icon: Search,
+    title: "Asset Recovery",
+    description: "Specialized recovery services for cryptocurrency, digital accounts, and compromised assets.",
+    features: [
+      "Cryptocurrency tracing and recovery",
+      "Compromised account restoration",
+      "Digital wallet recovery",
+      "Social media account recovery",
+      "Email account restoration",
+    ],
+    pricing: "Success-based pricing",
+  },
+  {
+    icon: Users,
+    title: "Incident Response",
+    description: "Rapid response to cyber attacks with comprehensive damage assessment and mitigation.",
+    features: [
+      "24/7 emergency response",
+      "Threat containment and eradication",
+      "Damage assessment and reporting",
+      "System restoration and hardening",
+      "Post-incident analysis",
+    ],
+    pricing: "Starting at $200/hour",
+  },
+  {
+    icon: Award,
+    title: "Cybersecurity Consulting",
+    description: "Strategic cybersecurity guidance and implementation for organizations of all sizes.",
+    features: [
+      "Security assessments and audits",
+      "Policy development and compliance",
+      "Security awareness training",
+      "Penetration testing",
+      "Risk management consulting",
+    ],
+    pricing: "Custom pricing",
+  },
+]
 
 export default function ServicesPage() {
   return (
@@ -289,143 +364,70 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Service Packages */}
+      {/* New Services Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-900">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-            <div className="space-y-2">
-              <div className="inline-block rounded-lg bg-cyan-900/20 px-3 py-1 text-sm text-cyan-500">
-                Service Packages
-              </div>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-white">
-                Tailored Security Solutions
-              </h2>
-              <p className="max-w-[700px] text-gray-400 md:text-xl/relaxed">
-                Choose from our strategic service packages or request a custom solution.
-              </p>
-            </div>
+          <div className="text-center mb-12">
+            <Badge variant="outline" className="mb-4">
+              Our Services
+            </Badge>
+            <h1 className="text-4xl font-bold mb-4">Comprehensive Cybersecurity Solutions</h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              From digital forensics to asset recovery, we provide the expertise and tools needed to protect and restore
+              your digital assets.
+            </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            <div className="flex flex-col rounded-lg border border-gray-800 bg-gray-900 shadow-lg overflow-hidden transition-all hover:shadow-cyan-900/20">
-              <div className="bg-gray-800 p-6">
-                <h3 className="text-xl font-bold text-white">Essential Security</h3>
-                <p className="mt-2 text-gray-400">Basic security assessment for small businesses and startups.</p>
-                <div className="mt-4 flex items-baseline">
-                  <span className="text-2xl font-bold text-white">Starting at</span>
-                  <span className="ml-1 text-4xl font-bold text-cyan-500">$2,500</span>
-                </div>
-              </div>
-              <div className="flex flex-col p-6 space-y-4 flex-1">
-                <ul className="space-y-3 flex-1">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">Vulnerability scanning</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">Basic penetration testing</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">Security report with findings</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">Remediation recommendations</span>
-                  </li>
-                </ul>
-                <Link href="/contact">
-                  <Button className="w-full bg-cyan-600 hover:bg-cyan-700 text-white mt-4">Request Quote</Button>
-                </Link>
-              </div>
-            </div>
-            <div className="flex flex-col rounded-lg border border-cyan-700 bg-gray-900 shadow-lg overflow-hidden transition-all hover:shadow-cyan-900/20 relative">
-              <div className="absolute top-0 right-0 m-2">
-                <div className="bg-cyan-600 text-white text-xs font-bold px-3 py-1 rounded-full">MOST POPULAR</div>
-              </div>
-              <div className="bg-gray-800 p-6">
-                <h3 className="text-xl font-bold text-white">Advanced Protection</h3>
-                <p className="mt-2 text-gray-400">Comprehensive security solution for medium-sized businesses.</p>
-                <div className="mt-4 flex items-baseline">
-                  <span className="text-2xl font-bold text-white">Starting at</span>
-                  <span className="ml-1 text-4xl font-bold text-cyan-500">$5,000</span>
-                </div>
-              </div>
-              <div className="flex flex-col p-6 space-y-4 flex-1">
-                <ul className="space-y-3 flex-1">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">Full-scope penetration testing</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">Web application security assessment</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">Social engineering simulation</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">Detailed reporting and remediation plan</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">30-day follow-up assessment</span>
-                  </li>
-                </ul>
-                <Link href="/contact">
-                  <Button className="w-full bg-cyan-600 hover:bg-cyan-700 text-white mt-4">Request Quote</Button>
-                </Link>
-              </div>
-            </div>
-            <div className="flex flex-col rounded-lg border border-gray-800 bg-gray-900 shadow-lg overflow-hidden transition-all hover:shadow-cyan-900/20">
-              <div className="bg-gray-800 p-6">
-                <h3 className="text-xl font-bold text-white">Enterprise Security</h3>
-                <p className="mt-2 text-gray-400">Complete security solution for large organizations.</p>
-                <div className="mt-4 flex items-baseline">
-                  <span className="text-2xl font-bold text-white">Starting at</span>
-                  <span className="ml-1 text-4xl font-bold text-cyan-500">$10,000</span>
-                </div>
-              </div>
-              <div className="flex flex-col p-6 space-y-4 flex-1">
-                <ul className="space-y-3 flex-1">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">Advanced penetration testing</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">Cloud infrastructure security assessment</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">Mobile application security testing</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">Red team simulation</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">Executive reporting and presentations</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-500" />
-                    <span className="text-gray-300">Quarterly reassessment and consulting</span>
-                  </li>
-                </ul>
-                <Link href="/contact">
-                  <Button className="w-full bg-cyan-600 hover:bg-cyan-700 text-white mt-4">Request Quote</Button>
-                </Link>
-              </div>
-            </div>
+
+          <div className="grid gap-8 md:grid-cols-2 mb-12">
+            {services.map((service, index) => (
+              <Card key={index} className="h-full">
+                <CardHeader>
+                  <div className="flex items-center space-x-4">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <service.icon className="h-8 w-8 text-primary" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl">{service.title}</CardTitle>
+                      <Badge variant="secondary" className="mt-1">
+                        {service.pricing}
+                      </Badge>
+                    </div>
+                  </div>
+                  <CardDescription className="text-base">{service.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2 mb-6">
+                    {service.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex items-center space-x-2">
+                        <CheckCircle className="h-4 w-4 text-green-600" />
+                        <span className="text-sm">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Button asChild className="w-full">
+                    <Link href="/contact">Get Quote</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-          <div className="mt-12 text-center">
-            <p className="text-gray-400 mb-4">Need a custom solution for your specific requirements?</p>
-            <Link href="/contact">
-              <Button className="bg-cyan-600 hover:bg-cyan-700 text-white">Contact for Custom Solutions</Button>
-            </Link>
+
+          <div className="bg-muted/50 rounded-lg p-8 text-center">
+            <h2 className="text-2xl font-bold mb-4">Need Emergency Assistance?</h2>
+            <p className="text-muted-foreground mb-6">
+              Our emergency response team is available 24/7 for critical incidents.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" asChild>
+                <Link href="/contact">
+                  <Clock className="mr-2 h-5 w-5" />
+                  Emergency Contact
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <Link href="/complaint">Report Incident</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
@@ -590,7 +592,7 @@ export default function ServicesPage() {
                 <Button className="bg-cyan-600 hover:bg-cyan-700 text-white">Get a Free Consultation</Button>
               </Link>
               <Link href="/portfolio">
-                <Button variant="outline" className="border-gray-600 text-gray-200 hover:bg-gray-800">
+                <Button variant="outline" className="border-gray-600 text-gray-200 hover:bg-gray-800 bg-transparent">
                   View Our Case Studies
                 </Button>
               </Link>

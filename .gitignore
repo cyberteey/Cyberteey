@@ -54,3 +54,11 @@ logs
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Package manager files
+pnpm-lock.yaml
+yarn.lock
+
+# Build artifacts
+dist/
+build/

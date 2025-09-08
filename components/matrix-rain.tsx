@@ -12,19 +12,10 @@ export function MatrixRain() {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
-    // Set canvas size
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-    resizeCanvas()
-    window.addEventListener("resize", resizeCanvas)
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
 
-    // Matrix characters
-    const matrix =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン"
-    const matrixArray = matrix.split("")
-
+    const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}".split("")
     const fontSize = 10
     const columns = canvas.width / fontSize
 
@@ -33,15 +24,17 @@ export function MatrixRain() {
       drops[x] = 1
     }
 
-    const draw = () => {
+    function draw() {
+      if (!ctx || !canvas) return
+
       ctx.fillStyle = "rgba(0, 0, 0, 0.04)"
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       ctx.fillStyle = "#0F0"
-      ctx.font = fontSize + "px monospace"
+      ctx.font = fontSize + "px arial"
 
       for (let i = 0; i < drops.length; i++) {
-        const text = matrixArray[Math.floor(Math.random() * matrixArray.length)]
+        const text = matrix[Math.floor(Math.random() * matrix.length)]
         ctx.fillText(text, i * fontSize, drops[i] * fontSize)
 
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
@@ -53,11 +46,18 @@ export function MatrixRain() {
 
     const interval = setInterval(draw, 35)
 
+    const handleResize = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+
+    window.addEventListener("resize", handleResize)
+
     return () => {
       clearInterval(interval)
-      window.removeEventListener("resize", resizeCanvas)
+      window.removeEventListener("resize", handleResize)
     }
   }, [])
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }} />
+  return <canvas ref={canvasRef} className="absolute inset-0 opacity-20" style={{ pointerEvents: "none" }} />
 }

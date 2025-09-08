@@ -1,25 +1,57 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Space_Grotesk } from "next/font/google"
-
-import "@/app/globals.css"
+import { Inter, Space_Grotesk } from "next/font/google"
+import "./globals.css"
+import { ThemeProvider } from "@/components/theme-provider"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { ThemeProvider } from "@/components/theme-provider"
-import { CookieConsent } from "@/components/features/cookie-consent"
-import { BackToTop } from "@/components/features/back-to-top"
+import { Toaster } from "@/components/ui/toaster"
+import { LiveChat } from "@/components/live-chat"
 
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk" })
 
 export const metadata: Metadata = {
-  title: "Cyber Crime Lab - Elite Ethical Hacking & Security Solutions",
+  title: "Cyberteey Crime Lab - Elite Cybersecurity & Digital Asset Recovery",
   description:
-    "Advanced cybersecurity services by certified ethical hackers. Penetration testing, security audits, and vulnerability assessments to protect your digital assets.",
+    "Professional cybersecurity services, digital forensics, and asset recovery with 94.2% success rate. Expert complaint handling and 24/7 support.",
   keywords:
-    "ethical hacking, cybersecurity, penetration testing, security audit, vulnerability assessment, cyber crime lab",
-  authors: [{ name: "Cyber Crime Lab" }],
-  creator: "Cyber Crime Lab",
-  publisher: "Cyber Crime Lab",
+    "cybersecurity, digital forensics, asset recovery, complaint tracking, live chat support, cyber crime investigation",
+  authors: [{ name: "Cyberteey Crime Lab" }],
+  creator: "Cyberteey Crime Lab",
+  publisher: "Cyberteey Crime Lab",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://cyberteey.com"),
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    title: "Cyberteey Crime Lab - Elite Cybersecurity & Digital Asset Recovery",
+    description: "Professional cybersecurity services, digital forensics, and asset recovery with 94.2% success rate.",
+    siteName: "Cyberteey Crime Lab",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Cyberteey Crime Lab - Cybersecurity Experts",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cyberteey Crime Lab - Elite Cybersecurity & Digital Asset Recovery",
+    description: "Professional cybersecurity services, digital forensics, and asset recovery with 94.2% success rate.",
+    images: ["/images/og-image.png"],
+    creator: "@cyberteey",
+  },
   robots: {
     index: true,
     follow: true,
@@ -31,47 +63,28 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://cybercrimelab.com",
-    title: "Cyber Crime Lab - Elite Ethical Hacking & Security Solutions",
-    description:
-      "Advanced cybersecurity services by certified ethical hackers. Protect your digital assets with military-grade security.",
-    siteName: "Cyber Crime Lab",
+  verification: {
+    google: "your-google-verification-code",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Cyber Crime Lab - Elite Ethical Hacking & Security Solutions",
-    description:
-      "Advanced cybersecurity services by certified ethical hackers. Protect your digital assets with military-grade security.",
-    creator: "@cybercrimelab",
-  },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
-  },
-  manifest: "/site.webmanifest",
     generator: 'v0.app'
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
-      </head>
-      <body className={`${spaceGrotesk.className} bg-gray-950 text-gray-50 min-h-screen flex flex-col antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <SiteHeader />
-          <main id="main-content" className="flex-1" role="main">
-            {children}
-          </main>
-          <SiteFooter />
-          <CookieConsent />
-          <BackToTop />
+      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <div className="relative flex min-h-screen flex-col">
+            <SiteHeader />
+            <main className="flex-1">{children}</main>
+            <SiteFooter />
+          </div>
+          <LiveChat />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

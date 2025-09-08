@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { ArrowUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { ArrowUp } from "lucide-react"
 
 export function BackToTop() {
   const [isVisible, setIsVisible] = useState(false)
@@ -31,9 +31,9 @@ export function BackToTop() {
 
   return (
     <Button
+      className="fixed bottom-4 right-4 z-50 rounded-full p-3"
+      size="sm"
       onClick={scrollToTop}
-      className="fixed bottom-8 right-8 z-40 rounded-full p-3 shadow-lg"
-      size="icon"
       aria-label="Back to top"
     >
       <ArrowUp className="h-4 w-4" />
